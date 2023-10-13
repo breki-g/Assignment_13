@@ -18,8 +18,12 @@ def main():
     location = STARTING_LOCATION
     while location != FINAL_DESTINATION:
         location = play_one_move(location)
-
-    print("Victory! Total coins", coins, end=".")
+        if location == FINAL_DESTINATION:
+            print("Victory! Total coins", coins, end=".\n")
+            if play_again():
+                location = STARTING_LOCATION
+    #print("Victory! Total coins", coins, end=".")
+    
 
 
 def play_one_move(location: Tuple[int]) -> Tuple[int]:
@@ -136,7 +140,19 @@ def check_lever(location: Tuple[int]) -> None:
 
             #lever = False
     #return lever
+def play_again():
+    global coins
+    reset_input = input("Play again (y/n):" )
+    reset_answer = reset_input.lower()
+    if reset_answer == "y":
+        coins = 0
+        again = True
+        print("")
+        
+    else:
+        again = False
 
+    return again
 
 
 if __name__ == "__main__":
