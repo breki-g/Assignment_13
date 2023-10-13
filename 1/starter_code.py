@@ -12,13 +12,14 @@ FINAL_DESTINATION = (3, 1)
 
 
 coins = 0
+lever = False
 
 def main():
     location = STARTING_LOCATION
     while location != FINAL_DESTINATION:
         location = play_one_move(location)
 
-    print("Victory!")
+    print("Victory! Total coins", coins, end=".")
 
 
 def play_one_move(location: Tuple[int]) -> Tuple[int]:
@@ -32,44 +33,46 @@ def play_one_move(location: Tuple[int]) -> Tuple[int]:
 
     if direction in valid_directions:
         location = move(direction, location)
+        #added
+        check_lever(location)
     else:
         print("Not a valid direction!")
 
-    #coins, lever = islever(coins)      #Test
+    #coins, lever = check_lever(coins)      #Test
 
     return location
 
 
 def find_directions(location: Tuple[int]) -> Tuple[str]:
     """Returns valid directions as a string given the supplied location."""
-    lever = False
+    
     if location == (1, 1):
-        islever(lever)
+
         valid_directions = (NORTH,)
     elif location == (1, 2):
-        lever = True
-        islever(lever)
+        
+
         valid_directions = NORTH, EAST, SOUTH
     elif location == (1, 3):
-        islever(lever)
+
         valid_directions = EAST, SOUTH
     elif location == (2, 1):
-        islever(lever)
+
         valid_directions = (NORTH,)
     elif location == (2, 2):
-        lever = True
-        islever(lever)
+        
+
         valid_directions = SOUTH, WEST
     elif location == (2, 3):
-        lever = True
-        islever(lever)
+        
+
         valid_directions = EAST, WEST
     elif location == (3, 2):
-        lever = True
-        islever(lever)
+        
+
         valid_directions = NORTH, SOUTH
     elif location == (3, 3):
-        islever(lever)
+ 
         valid_directions = SOUTH, WEST
 
     return valid_directions
@@ -118,17 +121,21 @@ def move(direction: str, location: Tuple[int]) -> Tuple[int]:
 
     return x, y
 
-def islever(lever: bool):
+def check_lever(location: Tuple[int]) -> None:
     
-    global coins
-    if lever:
+    global coins, lever
+    lever_rooms = [(1, 2), (2, 2), (2, 3), (3, 2)]
+    if location in lever_rooms:
         lever_input = input("Pull a lever (y/n):")
+        print("")
         lever_answer = lever_input.lower()
         if lever_answer == "y":
             coins += 1
-            print("You received 1 coin, your total is now ", coins, ".")
-            lever = False
-    return lever
+            
+            print("You received 1 coin, your total is now ", coins, end=".\n")
+
+            #lever = False
+    #return lever
 
 
 
