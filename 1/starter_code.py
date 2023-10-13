@@ -10,8 +10,8 @@ WEST = "w"
 STARTING_LOCATION = (1, 1)
 FINAL_DESTINATION = (3, 1)
 
-coins = 0
 
+coins = 0
 
 def main():
     location = STARTING_LOCATION
@@ -35,7 +35,7 @@ def play_one_move(location: Tuple[int]) -> Tuple[int]:
     else:
         print("Not a valid direction!")
 
-    
+    #coins, lever = islever(coins)      #Test
 
     return location
 
@@ -44,32 +44,32 @@ def find_directions(location: Tuple[int]) -> Tuple[str]:
     """Returns valid directions as a string given the supplied location."""
     lever = False
     if location == (1, 1):
-        islever(coins, lever)
+        islever(lever)
         valid_directions = (NORTH,)
     elif location == (1, 2):
         lever = True
-        islever(coins, lever)
+        islever(lever)
         valid_directions = NORTH, EAST, SOUTH
     elif location == (1, 3):
-        islever(coins, lever)
+        islever(lever)
         valid_directions = EAST, SOUTH
     elif location == (2, 1):
-        islever(coins, lever)
+        islever(lever)
         valid_directions = (NORTH,)
     elif location == (2, 2):
         lever = True
-        islever(coins, lever)
+        islever(lever)
         valid_directions = SOUTH, WEST
     elif location == (2, 3):
         lever = True
-        islever(coins, lever)
+        islever(lever)
         valid_directions = EAST, WEST
     elif location == (3, 2):
         lever = True
-        islever(coins, lever)
+        islever(lever)
         valid_directions = NORTH, SOUTH
     elif location == (3, 3):
-        islever(coins, lever)
+        islever(lever)
         valid_directions = SOUTH, WEST
 
     return valid_directions
@@ -118,7 +118,9 @@ def move(direction: str, location: Tuple[int]) -> Tuple[int]:
 
     return x, y
 
-def islever(coins: int, lever: bool) -> Tuple[int, bool]:
+def islever(lever: bool):
+    
+    global coins
     if lever:
         lever_input = input("Pull a lever (y/n):")
         lever_answer = lever_input.lower()
@@ -126,7 +128,7 @@ def islever(coins: int, lever: bool) -> Tuple[int, bool]:
             coins += 1
             print("You received 1 coin, your total is now ", coins, ".")
             lever = False
-    return coins, lever
+    return lever
 
 
 
